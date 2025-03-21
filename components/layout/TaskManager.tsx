@@ -9,11 +9,13 @@ import {
   View,
 } from "react-native";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 // import AuthContext from "../../context/AuthContext";
 import AnimatedButton from "../AnimatedButton";
 import Task from "../Task";
 import { ThemedText } from "../ThemedText";
+import Header from "../ui/Header";
+import LottieView from "lottie-react-native";
 
 const TaskManager = () => {
 
@@ -24,7 +26,6 @@ const TaskManager = () => {
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreashing] = useState(false);
 
-  // const { service, userId } = React.useContext(AuthContext);
 
   const getTasks = async () => {
     try {
@@ -110,7 +111,9 @@ const TaskManager = () => {
         style={styles.list} 
         data={data} 
         renderItem={({ item }) => <Task {...item} />} 
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh}/>}/>
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh}/>}
+      />
+        
       <View style={{height:10}}></View>
     </View>
   );
@@ -132,12 +135,14 @@ const styles = StyleSheet.create({
     overflow:"hidden",
     borderColor:"#CACACA",
     borderWidth:2,
+    // height:40,
   },
   list: {
     display: "flex",
     flexDirection: "column",
     gap: 8,
     marginTop:12,
+    flex:1
   },
   datePicker: {
     backgroundColor: "#EBEBEB",

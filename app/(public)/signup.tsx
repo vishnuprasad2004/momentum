@@ -116,8 +116,8 @@ const SignUp = () => {
   const responseListener = useRef<Notifications.EventSubscription>();
   
   useEffect(() => {
-    console.log("expo push token", expoPushToken);
-  })
+    console.log("expo push token ::", expoPushToken);
+  },[expoPushToken]);
   
   useEffect(() => {
     registerForPushNotificationsAsync().then(token => token && setExpoPushToken(token));
