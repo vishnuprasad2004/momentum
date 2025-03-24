@@ -3,12 +3,17 @@ import { StyleSheet, Image, Platform } from 'react-native';
 import { ThemedView } from '@/components/ThemedView';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import TaskManager from '@/components/layout/TaskManager';
+import { RootState } from '@/store/store';
+import { useSelector } from 'react-redux';
 
-export default function TabTwoScreen() {
+export default function TodoTab() {
+
+  const session = useSelector((state: RootState) => state.auth.session);
+
   return (
     <ThemedView>
       <SafeAreaView>
-        <TaskManager/>
+        <TaskManager user_id={session?.user.id ?? ''}/>
       </SafeAreaView>
     </ThemedView>
   );

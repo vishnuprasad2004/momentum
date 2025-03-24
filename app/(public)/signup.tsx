@@ -9,25 +9,6 @@ import * as Device from "expo-device";
 import Constants from "expo-constants";
 import { SchedulableTriggerInputTypes } from 'expo-notifications'
 
-function handleRegistrationError(errorMessage: string) {
-  alert(errorMessage);
-  throw new Error(errorMessage);
-}
-
-// async function schedulePushNotification() {
-//   await Notifications.scheduleNotificationAsync({
-//     content: {
-//       title: "You've got mail! 📬",
-//       body: 'Here is the notification body',
-//       data: { data: 'goes here', test: { test1: 'more data' } },
-//     },
-//     trigger: {
-//       type: SchedulableTriggerInputTypes.TIME_INTERVAL,
-//       seconds: 2,
-//     },
-//   });
-// }
-
 
 async function sendPushNotification(expoPushToken: string) {
   console.log("sending to this token", expoPushToken);
@@ -190,12 +171,6 @@ const SignUp = () => {
         <Text style={{ fontFamily: "Poppins-Regular" }}>Already have an Account, Login then !</Text>
       </TouchableOpacity>
       
-      <Button
-        title="Press to schedule a notification"
-        onPress={async () => {
-          await sendPushNotification(expoPushToken);
-        }}
-      />
     </ThemedView>
   )
 }

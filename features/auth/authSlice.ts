@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Session } from "@supabase/supabase-js";
 import { supabase } from "@/config/supabase";
 
@@ -67,7 +67,11 @@ export const signOut = createAsyncThunk('auth/signOut', async () => {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    setSession: (state, action: PayloadAction<Session | null>) => {
+      state.session = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       // Sign Up
@@ -84,6 +88,29 @@ const authSlice = createSlice({
       .addCase(signOut.fulfilled, (state) => { state.session = null; });
   },
 });
+
+// Fetch existing session (similar to useEffect logic in the context)
+export const fetchSession = createAsyncThunk(
+  'auth/fetchSession',
+  async (_, { rejectWithValue }) => {
+    const { data, error } = await supabase.auth.getSession();
+    if (error) return rejectWithValue(error.message);
+    // Return the session (or null if none exists)
+    return data.session;
+  }
+);
+
+// A helper function to subscribe to auth state changes.
+// This is not a thunk because it's used as a side-effect listener.
+export const subscribeToAuthChanges = (dispatch: any) => {
+  const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+    // Update the Redux state when the auth state changes.
+    dispatch(setSession(session));
+  });
+  return () => {
+    listener.subscription.unsubscribe();
+  };
+};
 
 // const authSlice = createSlice({
 //   name: 'auth',
@@ -110,4 +137,5 @@ const authSlice = createSlice({
 //   },
 // });
 
+export const { setSession } = authSlice.actions;
 export default authSlice.reducer;

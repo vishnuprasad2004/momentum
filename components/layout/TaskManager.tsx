@@ -10,31 +10,41 @@ import {
 } from "react-native";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-// import AuthContext from "../../context/AuthContext";
 import AnimatedButton from "../AnimatedButton";
 import Task from "../Task";
 import { ThemedText } from "../ThemedText";
-import Header from "../ui/Header";
 import LottieView from "lottie-react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store/store";
+import { addTodo, fetchTodos } from "@/features/todo/todoSlice";
 
-const TaskManager = () => {
+type Todo = {
+  id: string;
+  user_id: string;
+  title: string;
+  deadline: string;
+  is_completed: boolean;
+};
+
+const TaskManager = ({user_id}: {user_id: string}) => {
 
   const [title, setTitle] = useState<string>("");
   const [deadline, setDeadline] = useState<Date>(new Date());
-  const [data, setData] = useState<any>([]);
   const [taskAdded, setTaskAdded] = useState(false); // 👈 State to trigger useEffect
-  const [loading, setLoading] = useState(false);
-  const [refreshing, setRefreashing] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
+  const { loading, todos } = useSelector((state: RootState) => state.todo);
+  const dispatch = useDispatch<AppDispatch>();
 
-  const getTasks = async () => {
+  // Fetch tasks from the server
+  const getTasks = useCallback(async () => {
     try {
-      // const response = await service.getTasks(userId);
-      // setData(response);
+      await dispatch(fetchTodos({ user_id })).unwrap(); // Ensure the action completes
     } catch (error) {
-      console.log("Error", error);
+      ToastAndroid.show("Error fetching tasks", ToastAndroid.SHORT);
+      console.log("Error fetching tasks:", error);
     }
-  };
+  }, [dispatch]);
 
   const addTask = useCallback(async() => {
     try {
@@ -44,32 +54,35 @@ const TaskManager = () => {
         return;
       }
 
-      setLoading(true);
       const dl = deadline.toISOString();
-      // const res = await service.createTask({userId, title, deadline:dl});
+      dispatch(addTodo({ user_id, title, deadline: dl })).unwrap().then(() => {
+        setDeadline(new Date());
+        setTitle("");
+        setTaskAdded((prev) => !prev);
+        getTasks();
+        ToastAndroid.show("Task added Successfully", ToastAndroid.SHORT);
+      });
 
-      setDeadline(new Date());
-      setTitle("");
-      setTaskAdded((prev) => !prev);
-      ToastAndroid.show("Task added Successfully", ToastAndroid.SHORT);
 
     } catch (error) {
       console.error("Error", error);
 
-    } finally {
-      setLoading(false);
-    }
-  },[title, deadline]);
+    } 
+  },[title, deadline, user_id, dispatch, getTasks]);
 
+  // Refresh handler for pull-to-refresh
+  const handleRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await getTasks();
+    setRefreshing(false);
+  }, [getTasks]);
+
+  // Fetch tasks on component mount
   useEffect(() => {
     getTasks();
-  }, [taskAdded]);
-
-
-  function handleRefresh() {
-    // setRefreashing(true);
-    // throw new Error("Function not implemented.");
-  }
+    // console.log(todos);
+    
+  }, [getTasks]);
 
   return (
     <View style={[{ padding: 15, height: "100%", marginTop: 16 }, styles.container]}>
@@ -107,14 +120,19 @@ const TaskManager = () => {
           <AnimatedButton onPress={addTask} title="Add" isLoading={loading} accessibilityHint="" accessibilityLabel="" width={"39%"} key={12} />
         </View>
       </View>
-      <FlatList 
-        style={styles.list} 
-        data={data} 
-        renderItem={({ item }) => <Task {...item} />} 
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh}/>}
-      />
-        
-      <View style={{height:10}}></View>
+      <View style={{flex:1}}>
+        <FlatList 
+          style={styles.list} 
+          data={todos as Todo[]}        
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => <Task {...item} />} 
+          ListEmptyComponent={<ThemedText>No Todos found</ThemedText>}
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh}/>}
+          scrollEnabled={true}
+          ListFooterComponent={<View style={{height:100}}></View>}
+        />
+      </View>
+
     </View>
   );
 };
@@ -135,14 +153,17 @@ const styles = StyleSheet.create({
     overflow:"hidden",
     borderColor:"#CACACA",
     borderWidth:2,
-    // height:40,
+    lineHeight: 20, // Prevents height fluctuation due to text size
+    height:40,
   },
   list: {
     display: "flex",
     flexDirection: "column",
     gap: 8,
     marginTop:12,
-    flex:1
+    // paddingBottom: 80,
+    overflow: "scroll",
+    // flex:1
   },
   datePicker: {
     backgroundColor: "#EBEBEB",

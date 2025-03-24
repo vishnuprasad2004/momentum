@@ -1,18 +1,37 @@
 import { Animated, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from "react-native";
-import React, { useContext, useRef, useState } from "react";
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { router, useRouter } from "expo-router";
+import React, { useState } from "react";
+import { router, } from "expo-router";
 import AnimatedButton from "@/components/AnimatedButton";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, AppDispatch } from "@/store/store";
+import { signIn } from "@/features/auth/authSlice";
 
 const SignIn = () => {
   // const router = useRouter();
   const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState("");
+  const { loading, error } = useSelector((state:RootState) => state.auth);
+  const dispatch = useDispatch<AppDispatch>();
 
-  function handleLogin(): void {
-    // throw new Error("Function not implemented.");
+  async function handleLogin() {
+    if(!email || !password) {
+      ToastAndroid.show("Please fill all the fields", ToastAndroid.SHORT);
+      return;
+    }
+    try {
+      const result = await dispatch(signIn({email, password})).unwrap();
+      console.log(result);
+      if (result) {
+        ToastAndroid.show("Login Successful", ToastAndroid.SHORT);
+        router.push("/(tabs)");
+      }
+
+    } catch (error:any) {
+      ToastAndroid.show("Login Unsuccessful", ToastAndroid.SHORT);
+      console.log(error);
+    }
+    
+
   }
 
   return (

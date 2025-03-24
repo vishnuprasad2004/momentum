@@ -3,26 +3,19 @@ import { ThemedView } from '@/components/ThemedView';
 import Header from '@/components/ui/Header';
 import { StatusBar } from 'expo-status-bar';
 import HabitTracker from '@/components/layout/HabitTracker';
-import LottieView from 'lottie-react-native';
-import { useRef } from 'react';
-import Quote from '@/components/Quote';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
 
 export default function HomeScreen() {
-  const animation = useRef<LottieView>(null);
-
+  // const animation = useRef<LottieView>(null);
+  const { session } = useSelector((state:RootState) => state.auth);
 
   return (
     <ThemedView style={{flex:1}}>
       <StatusBar />
-      <Header name='Vishnu'/>
+      <Header name={session?.user.user_metadata?.name}/>
       <HabitTracker/>
-      <LottieView 
-        source={require("@/assets/animations/checkmark.json")}
-        style={{width:100, height:100}}
-        ref={animation}
-      />
-      
-      
     </ThemedView>
   );
 }
