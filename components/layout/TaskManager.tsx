@@ -30,7 +30,6 @@ const TaskManager = ({user_id}: {user_id: string}) => {
 
   const [title, setTitle] = useState<string>("");
   const [deadline, setDeadline] = useState<Date>(new Date());
-  const [taskAdded, setTaskAdded] = useState(false); // 👈 State to trigger useEffect
   const [refreshing, setRefreshing] = useState(false);
 
   const { loading, todos } = useSelector((state: RootState) => state.todo);
@@ -41,7 +40,7 @@ const TaskManager = ({user_id}: {user_id: string}) => {
     try {
       await dispatch(fetchTodos({ user_id })).unwrap(); // Ensure the action completes
     } catch (error) {
-      ToastAndroid.show("Error fetching tasks", ToastAndroid.SHORT);
+      // ToastAndroid.show("Error fetching tasks", ToastAndroid.SHORT);
       console.log("Error fetching tasks:", error);
     }
   }, [dispatch]);
@@ -58,7 +57,7 @@ const TaskManager = ({user_id}: {user_id: string}) => {
       dispatch(addTodo({ user_id, title, deadline: dl })).unwrap().then(() => {
         setDeadline(new Date());
         setTitle("");
-        setTaskAdded((prev) => !prev);
+
         getTasks();
         ToastAndroid.show("Task added Successfully", ToastAndroid.SHORT);
       });

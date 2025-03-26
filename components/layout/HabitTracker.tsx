@@ -7,6 +7,9 @@ import BottomSheet from "@/components/BottomSheet";
 import { AddHabitSheet, HabitSheet } from "../DailyHabitSheet";
 import { ThemedView } from "../ThemedView";
 import { ThemedText } from "../ThemedText";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import Header from "../ui/Header";
 
 const CategoryList = ({ categories, onCategoryPress }:any) => (
   <FlatList
@@ -16,10 +19,14 @@ const CategoryList = ({ categories, onCategoryPress }:any) => (
     showsHorizontalScrollIndicator={false}
     keyExtractor={(item) => item.id.toString()}
     renderItem={({ item }) => (
-      <TouchableOpacity style={{justifyContent: "center",
-        alignItems: "center",
-        gap: 4,
-        marginTop: 2,}} onPress={() => onCategoryPress(item.name)}>
+      <TouchableOpacity 
+        style={{justifyContent: "center",
+          alignItems: "center",
+          gap: 4,
+          marginTop: 2,
+        }}
+        onPress={() => onCategoryPress(item.name)}
+      >
         <ThemedView style={styles.categoryItem}>
           <Text style={styles.categoryIcon}>{item.icon}</Text>
         </ThemedView>
@@ -46,6 +53,9 @@ const HabitTracker = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [newHabit, setNewHabit] = useState({ name: "", icon: "" });
 
+  const { session } = useSelector((state:RootState) => state.auth);
+
+
   const handleOpenBottomSheet = (category:any) => {
     setSelectedCategory(category === "Add" ? null : category);
     bottomSheetModalRef.current?.present();
@@ -63,9 +73,9 @@ const HabitTracker = () => {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <StatusBar />
       <SafeAreaView style={styles.container}>
+        <Header name={session?.user.user_metadata?.name}/>
         <BottomSheetModalProvider>
           <ScrollView>
-            
             <CategoryList categories={categories} onCategoryPress={handleOpenBottomSheet} />
             </ScrollView>
           <BottomSheet ref={bottomSheetModalRef}>
@@ -102,9 +112,10 @@ const styles = StyleSheet.create({
     borderRadius: 100 / 2,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#D9D9D9",
-    boxShadow:"0 4px 0px #CACACA",
-    borderColor:"#CACACA",
+    marginLeft: 10,
+    // backgroundColor: "#D9D9D9",
+    boxShadow:"0 4px 0px #CACACA56",
+    borderColor:"#CACACA56",
     borderWidth:2,
   },
   categoryIcon: { 
@@ -117,5 +128,6 @@ const styles = StyleSheet.create({
   list: {
     paddingLeft: 15,
     paddingRight: 10,
+    gap: 10,
   }
 });

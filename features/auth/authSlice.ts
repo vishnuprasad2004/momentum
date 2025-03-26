@@ -19,25 +19,23 @@ type SignUpPayload = {
   email: string; 
   password: string;
   name: string;
-  expo_push_token: string;
+  user_push_token: string;
   allow_notifications: boolean;
-  notification_frequency: string;
   last_notified: string;
   total_completed_tasks: number;
 
 };
 
-export const signUp = createAsyncThunk('auth/signUp', async ({ email, password, allow_notifications, expo_push_token, last_notified,name, notification_frequency, total_completed_tasks }: SignUpPayload, { rejectWithValue }) => {
+export const signUp = createAsyncThunk('auth/signUp', async ({ email, password, allow_notifications, user_push_token, last_notified,name, total_completed_tasks }: SignUpPayload, { rejectWithValue }) => {
   const { data, error } = await supabase.auth.signUp({ 
     email, 
     password,
     options: {
       data: {
         name,
-        expo_push_token,
-        allow_notifications,
-        notification_frequency,
+        user_push_token,
         last_notified,
+        allow_notifications,
         total_completed_tasks
       }
     }

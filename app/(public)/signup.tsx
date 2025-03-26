@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, Platform, Button } from 'react-native'
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, Platform, Button, ToastAndroid } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
@@ -8,6 +8,9 @@ import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
 import Constants from "expo-constants";
 import { SchedulableTriggerInputTypes } from 'expo-notifications'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '@/store/store'
+import { signUp } from '@/features/auth/authSlice'
 
 
 async function sendPushNotification(expoPushToken: string) {
@@ -86,7 +89,6 @@ const SignUp = () => {
   const router = useRouter();
   const [name, setNameField] = useState("");
   const [email, setEmailField] = useState("");
-  const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState("");
   const [expoPushToken, setExpoPushToken] = useState("");
   const [channels, setChannels] = useState<Notifications.NotificationChannel[]>([]);
@@ -95,7 +97,11 @@ const SignUp = () => {
   );
   const notificationListener = useRef<Notifications.EventSubscription>();
   const responseListener = useRef<Notifications.EventSubscription>();
-  
+  const dispatch = useDispatch<AppDispatch>();
+  const { loading, error } = useSelector((state:RootState) => state.auth);
+
+
+
   useEffect(() => {
     console.log("expo push token ::", expoPushToken);
   },[expoPushToken]);
@@ -129,7 +135,33 @@ const SignUp = () => {
   
   
   const handleSignup = async () => {
-    
+    if(name.length <= 2 || !name || !email || !password) {
+      console.log("Please fill all fields");
+      ToastAndroid.show("Please fill all fields", ToastAndroid.SHORT);
+      return;
+    }
+    if(password.length < 6) {
+      ToastAndroid.show("Password must be atleast 6 characters long", ToastAndroid.SHORT);
+      return;
+    }
+
+    try {
+      const result = await dispatch(signUp({ email, password, name, user_push_token: expoPushToken, allow_notifications: true, last_notified: new Date().toISOString(), total_completed_tasks: 0 })).unwrap();
+      if(result) {
+        ToastAndroid.show("Signup Successful", ToastAndroid.SHORT);
+        router.push("/(tabs)");
+      }
+      setEmailField("");
+      setPassword("");
+      setNameField("");
+    } catch (e) {
+      console.log(e);
+      console.log(error);
+      
+      ToastAndroid.show("Signup Unsuccessful", ToastAndroid.SHORT);
+    }
+
+
   };
 
 
@@ -168,7 +200,7 @@ const SignUp = () => {
       <AnimatedButton title="Sign Up" onPress={handleSignup} isLoading={loading} width={"100%"} color={"white"} shadowColor={"#ddd"} textColor={"#111"}/>
 
       <TouchableOpacity style={styles.link} onPress={() => router.push("/(public)/signin")}>
-        <Text style={{ fontFamily: "Poppins-Regular" }}>Already have an Account, Login then !</Text>
+        <Text style={{ fontFamily: "Poppins-SemiBold" }}>Already have an Account, Login then !</Text>
       </TouchableOpacity>
       
     </ThemedView>
@@ -186,6 +218,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 12,
     backgroundColor: "white",
+    borderWidth: 2,
+    borderColor: "#ddd",
   },
   page: {
     padding: 20,

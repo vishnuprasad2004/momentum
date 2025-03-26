@@ -48,11 +48,14 @@ export const deleteTodo = createAsyncThunk('todos/deleteTodo', async (id: string
 // Toggle todo completion in Supabase
 export const toggleTodo = createAsyncThunk('todos/toggleTodo', async (id: string) => {
   const { data, error } = await supabase
-      .from('todos')
-      .update({ is_completed: true })
-      .eq('id', id)
-      .select("*")
-      .single();
+    .from('todos')
+    .update({ is_completed: true })
+    .eq('id', id)
+    .select("*")
+    .single();
+  console.log(data);
+  
+  const {} = await supabase.rpc('increment_total_tasks', {user_id: data.user_id})
   if (error) throw error;  
   return data;
 });

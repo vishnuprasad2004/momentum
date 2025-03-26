@@ -29,6 +29,9 @@ const SignIn = () => {
     } catch (error:any) {
       ToastAndroid.show("Login Unsuccessful", ToastAndroid.SHORT);
       console.log(error);
+    } finally {
+      setEmail("");
+      setPassword("");
     }
     
 

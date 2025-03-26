@@ -1,6 +1,6 @@
 import { StatusBar, StyleSheet, Text, View } from 'react-native'
 import React, { FC, forwardRef, ReactNode, useCallback, useMemo, useRef } from 'react'
-import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet'
+import { BottomSheetBackdrop, BottomSheetHandle, BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet'
 import { useColorScheme } from '@/hooks/useColorScheme';
 
 
@@ -31,12 +31,13 @@ const BottomSheet = forwardRef<BottomSheetModal, { children: ReactNode }>(({ chi
       <BottomSheetModal
             ref={ref}
             // onChange={handleSheetChanges}
-            // index={1}
             snapPoints={snapPoints}
             keyboardBehavior="interactive"
             enableDynamicSizing={false}
             backdropComponent={renderBackdrop}
-            style={{ backgroundColor: colorScheme === 'dark' ? '#121212' : '#FAFAFA' }}
+            handleStyle={{ backgroundColor: colorScheme === 'dark' ? '#121212' : '#FAFAFA' }}
+            backgroundStyle={styles.backgroundContainer}
+            handleIndicatorStyle={styles.handleIndicator}
           >
             <BottomSheetView style={[styles.contentContainer, { backgroundColor: colorScheme === 'dark' ? '#121212' : '#FAFAFA' }]}>
               {children}
@@ -50,13 +51,19 @@ export default BottomSheet
 
 const styles = StyleSheet.create({
   container: {
-      flex: 1,
-      paddingTop: StatusBar.currentHeight! - 12 || 0,
-      fontFamily: "Poppins-SemiBold",
-      backgroundColor: "#FAFAFA",
-    },
-    contentContainer: {
-      flex: 1,
-      alignItems: "center",
-    },
+    flex: 1,
+    paddingTop: StatusBar.currentHeight! - 12 || 0,
+    fontFamily: "Poppins-SemiBold",
+    // backgroundColor: "#FAFAFA",
+  },
+  contentContainer: {
+    flex: 1,
+    alignItems: "center",
+  },
+  backgroundContainer: {
+    backgroundColor: '#222',
+  },
+  handleIndicator: {
+    backgroundColor: '#eee',
+  },
 })

@@ -36,10 +36,3 @@ yarn-error.*
 *.tsbuildinfo
 
 app-example
-
-google-services.json
-
-# Android
-/android
-#ios
-/ios
