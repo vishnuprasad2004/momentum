@@ -37,14 +37,15 @@ const Profile = () => {
         </View>
 
         <View style={{ display: "flex", flexDirection: "row", alignItems: "center", width: "100%", gap: 10 }}>
-          <ThemedText style={{fontFamily: "Poppins-SemiBold", fontSize:18}}>ID:</ThemedText>
-          <ThemedText>{session?.user.id}</ThemedText>
-        </View>
-
-        <View style={{ display: "flex", flexDirection: "row", alignItems: "center", width: "100%", gap: 10 }}>
           <ThemedText style={{fontFamily: "Poppins-SemiBold", fontSize:18}}>Total Completed Tasks:</ThemedText>
           <ThemedText>{session?.user.user_metadata.total_completed_tasks ?? "-"}</ThemedText>
         </View>
+
+        <View style={{ display: "flex", flexDirection: "row", alignItems: "center", width: "100%", gap: 10 }}>
+          <ThemedText style={{fontFamily: "Poppins-SemiBold", fontSize:18}}>Allow Notifications:</ThemedText>
+          <Switch thumbColor={"#ff7f2a"} style={{}} value={session?.user.user_metadata.allow_notifications} />
+        </View>
+        <View style={{ height:60 }}></View>
         {/* <Switch thumbColor={Colors["dark"].primary} /> */}
         <AnimatedButton onPress={handleLogout} title='Logout' width={"100%"}/>
 
