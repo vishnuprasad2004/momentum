@@ -1,50 +1,31 @@
-# Welcome to your Expo app 👋
+# <img src="assets\images\logo-o-m.png" width="40px"> Momentum – Smart Task Reminder App 
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+**Momentum is a task management app that goes beyond traditional to-do lists. Unlike standard apps where tasks get forgotten after the deadline, Momentum ensures you stay on track with AI-generated reminders inspired by Duolingo’s notification system.**
 
-## Get started
+### Challenges solved:  
 
-1. Install dependencies
+I tried to solve a problem that arise with traditional task manager tools (todo apps) like notion, where you  do note them down but the software doesn't remind of those task and then they become irrelevant after the deadline is crossed. My app sends you remainders like duolingo to let you complete what to task is, I use AI to generate the messages (notification).
 
-   ```bash
-   npm install
-   ```
 
-2. Start the app
+## Technologies Used: 
+<img src="https://img.shields.io/badge/react_native-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB">
+<img src="https://img.shields.io/badge/expo-1C1E24?style=for-the-badge&logo=expo&logoColor=#D04A37">
+<img src="https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white"/>
+<img src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white">
+<img src="https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white"/>
 
-   ```bash
-    npx expo start
-   ```
 
-In the output, you'll find options to open the app in a
+## 🚀 Features
+- ✅ AI-Powered Reminders – Personalized notifications to keep tasks relevant using **FCM v1 push notification service**
+- ✅ React Native Expo – Cross-platform mobile app development with **Expo and EAS services**
+- ✅ Supabase Backend – Secure user authentication & task management 
+- ✅ Redux Toolkit – Efficient state management for a smooth experience
+- ✅ Offline Support – Access tasks anytime
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+## Steps for Installation
+```sh
+git clone https://github.com/vishnuprasad2004/momentum.git  
+cd momentum  
+npm install  
+expo start  
 ```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.

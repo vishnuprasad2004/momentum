@@ -15,7 +15,7 @@
       "package": "com.momentum.app",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#fe8e25"
       },
       "googleServicesFile": "./google-services.json"
     },
@@ -32,8 +32,8 @@
         {
           "image": "./assets/images/splash-screen.png",
           "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "resizeMode": "cover",
+          "backgroundColor": "#fe8e25"
         }
       ]
     ],
