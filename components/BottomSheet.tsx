@@ -22,7 +22,7 @@ const BottomSheet = forwardRef<BottomSheetModal, { children: ReactNode }>(({ chi
   }, []);
 
 
-  const snapPoints = useMemo(() => ["35%"], []);
+  const snapPoints = useMemo(() => ["25%"], []);
   const colorScheme = useColorScheme() ?? 'light';
 
 

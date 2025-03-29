@@ -41,7 +41,7 @@ async function registerForPushNotificationsAsync() {
 
   if (Platform.OS === 'android') {
     await Notifications.setNotificationChannelAsync('myNotificationChannel', {
-      name: 'A channel is needed for the permissions prompt to appear',
+      name: 'default',
       importance: Notifications.AndroidImportance.MAX,
       vibrationPattern: [0, 250, 250, 250],
       lightColor: '#FF231F7C',
@@ -136,9 +136,13 @@ const SignUp = () => {
   
   const handleSignup = async () => {
     if(name.length <= 2 || !name || !email || !password) {
-      console.log("Please fill all fields");
       ToastAndroid.show("Please fill all fields", ToastAndroid.SHORT);
       return;
+    }
+    if(!(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/g.test(email))) {
+      ToastAndroid.show("Please enter a valid email address", ToastAndroid.SHORT);
+      return;
+
     }
     if(password.length < 6) {
       ToastAndroid.show("Password must be atleast 6 characters long", ToastAndroid.SHORT);

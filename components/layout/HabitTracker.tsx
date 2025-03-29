@@ -96,6 +96,7 @@ export default HabitTracker
 const styles = StyleSheet.create({
   container: { 
     flex: 1,
+    marginTop: -20,
   },
   categoryItem: {
     // width: 60,

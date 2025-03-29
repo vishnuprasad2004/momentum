@@ -35,6 +35,8 @@ const TaskManager = ({user_id}: {user_id: string}) => {
   const { loading, todos } = useSelector((state: RootState) => state.todo);
   const dispatch = useDispatch<AppDispatch>();
 
+  const confirmationScreenRef = useRef<View>(null);
+
   // Fetch tasks from the server
   const getTasks = useCallback(async () => {
     try {
@@ -60,6 +62,11 @@ const TaskManager = ({user_id}: {user_id: string}) => {
 
         getTasks();
         ToastAndroid.show("Task added Successfully", ToastAndroid.SHORT);
+        
+        setTimeout(() => {
+
+        },700)
+
       });
 
 
@@ -124,12 +131,16 @@ const TaskManager = ({user_id}: {user_id: string}) => {
           style={styles.list} 
           data={todos as Todo[]}        
           keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => <Task {...item} />} 
+          renderItem={({ item }) => <Task {...item} confirmationScreenRef={confirmationScreenRef}/>} 
           ListEmptyComponent={<ThemedText>No Todos found</ThemedText>}
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh}/>}
           scrollEnabled={true}
           ListFooterComponent={<View style={{height:100}}></View>}
         />
+      </View>
+      <View style={styles.confirmationScreen} ref={confirmationScreenRef}>
+        <LottieView source={require("@/assets/animations/checkmark.json")} autoPlay direction={1} duration={2000} style={{width:200, height:200}}></LottieView>
+        <ThemedText style={{fontFamily: "Poppins-SemiBold"}}>Task Completed</ThemedText>
       </View>
 
     </View>
@@ -175,4 +186,18 @@ const styles = StyleSheet.create({
     borderColor:"#CACACA",
     borderWidth:2,
   },
+  confirmationScreen: {
+    // display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    zIndex: 1000,
+    display: "none"
+  }
 });

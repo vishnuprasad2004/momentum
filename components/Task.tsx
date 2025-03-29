@@ -1,5 +1,5 @@
-import { ActivityIndicator, Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React from "react";
+import { ActivityIndicator, Alert, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from "react-native";
+import React, { forwardRef } from "react";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
@@ -7,15 +7,16 @@ import { AppDispatch, RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteTodo, toggleTodo } from "@/features/todo/todoSlice";
 
-type Todo = {
+type TodoProps = {
   id: string;
   user_id: string;
   title: string;
   deadline: string;
   is_completed: boolean;
+  confirmationScreenRef: React.RefObject<View>;
 };
 
-const Task = ({ id, title, deadline, user_id, is_completed }: Todo) => {
+const Task = forwardRef<View, TodoProps>(({ id, title, deadline, user_id, is_completed, confirmationScreenRef }: TodoProps, ref) => {
 
   const dispatch = useDispatch<AppDispatch>();
   const { loading } = useSelector((state: RootState) => state.todo);
@@ -56,6 +57,9 @@ const Task = ({ id, title, deadline, user_id, is_completed }: Todo) => {
   }
 
   const handleComplete = async() => {
+    if(is_completed) {
+      return;
+    }
     Alert.alert(
       "Completed this Task",
       "Are you sure you have completed this task?", [
@@ -68,9 +72,24 @@ const Task = ({ id, title, deadline, user_id, is_completed }: Todo) => {
         text: "Complete", 
         onPress: async() => {
           await dispatch(toggleTodo(id)).then(() => {
-            console.log("Task completed");
+            
+            // console.log("Task completed");
+            if(confirmationScreenRef.current) {
+              confirmationScreenRef.current.setNativeProps({
+                style: {display: "flex"}
+              });
+            }
+            setTimeout(() => {
+              if(confirmationScreenRef.current) {
+                confirmationScreenRef.current.setNativeProps({
+                  style: { display: "none" }
+                });
+              }
+            }
+            , 2000);
           }).catch((error) => {
             console.error("Error completing task", error);
+            ToastAndroid.show("Failed to complete the task", ToastAndroid.SHORT);
           });
         },
         style: "default"
@@ -95,7 +114,7 @@ const Task = ({ id, title, deadline, user_id, is_completed }: Todo) => {
       </TouchableOpacity>
     </View>
   );
-};
+});
 
 export default Task;
 
