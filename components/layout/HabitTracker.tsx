@@ -37,11 +37,6 @@ const CategoryList = ({ categories, onCategoryPress }:any) => (
 );
 
 const categoriesData = [
-  { id: 1, name: "Coding", icon: "💻" },
-  { id: 2, name: "Music", icon: "🎹" },
-  { id: 3, name: "Workout", icon: "💪" },
-  { id: 4, name: "Photography", icon: "📷" },
-  { id: 5, name: "Painting", icon: "🎨" },
   { id: 6, name: "Add", icon: "➕" },
 ];
 
