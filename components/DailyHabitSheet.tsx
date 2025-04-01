@@ -7,7 +7,14 @@ import { ThemedView } from "./ThemedView"
 
 const timeOptions = [15, 30, 60, 75];
 
-const HabitSheet = ({ selectedCategory, selectedTime, setSelectedTime, onClose }:any) => (
+type HabitSheetProps = {
+  selectedCategory:string, 
+  selectedTime:number, 
+  setSelectedTime:(time:number) => void, 
+  onClose: () => void
+}
+
+const HabitSheet = ({ selectedCategory, selectedTime, setSelectedTime, onClose }:HabitSheetProps) => (
   <>
     <ThemedText style={styles.sheetTitle}>How much time did you spend doing {selectedCategory}?</ThemedText>
     <View style={styles.radioContainer}>
@@ -23,27 +30,6 @@ const HabitSheet = ({ selectedCategory, selectedTime, setSelectedTime, onClose }
     </View>
     <TouchableOpacity style={styles.doneButton} onPress={onClose}>
       <Text style={styles.doneButtonText}>Done</Text>
-    </TouchableOpacity>
-  </>
-);
-
-const AddHabitSheet = ({ newHabit, setNewHabit, onAddHabit }:any) => (
-  <>
-    <Text style={styles.sheetTitle}>Add a New Habit</Text>
-    <TextInput
-      placeholder="Habit Name"
-      style={styles.input}
-      value={newHabit.name}
-      onChangeText={(text) => setNewHabit({ ...newHabit, name: text })}
-    />
-    <TextInput
-      placeholder="Emoji"
-      style={styles.input}
-      value={newHabit.icon}
-      onChangeText={(text) => setNewHabit({ ...newHabit, icon: text })}
-    />
-    <TouchableOpacity style={styles.addButton} onPress={onAddHabit}>
-      <Text style={styles.addButtonText}>Add Habit</Text>
     </TouchableOpacity>
   </>
 );
@@ -90,7 +76,7 @@ const DailyHabitInputSheet = ({ handlePresentModalClose }:any) => {
   );
 };
 
-export { DailyHabitInputSheet, HabitSheet, AddHabitSheet };
+export { DailyHabitInputSheet, HabitSheet };
 
 const styles = StyleSheet.create({
   text: {

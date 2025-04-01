@@ -48,11 +48,7 @@ export const deleteHabit = createAsyncThunk("habits/deleteHabit", async({ user_i
 
 export const habitSlice = createSlice({
   name: 'habits',
-  initialState: {
-    habits: [],
-    loading: false,
-    error: null
-  },
+  initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
     
@@ -60,3 +56,4 @@ export const habitSlice = createSlice({
 })
 
 
+export default habitSlice.reducer;

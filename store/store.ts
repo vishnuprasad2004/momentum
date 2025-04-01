@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
 import authSlice from "@/features/auth/authSlice";
 import todoSlice from "@/features/todo/todoSlice";
+import habitSlice from "@/features/habit/habitSlice";
 
 const persistConfig = {
   key: "root",
@@ -13,7 +14,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   auth: authSlice,
   todo: todoSlice,
-  // habits: habitsSlice,
+  habits: habitSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
