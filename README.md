@@ -23,6 +23,12 @@ I tried to solve a problem that arise with traditional task manager tools (todo 
 - ✅ Redux Toolkit – Efficient state management for a smooth experience
 - ✅ Offline Support – Access tasks anytime
 
+# Screenshots
+<p>
+<img src="https://github-production-user-asset-6210df.s3.amazonaws.com/116942066/429643082-9a698403-bcec-4a85-a600-c8d814b5cd39.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20250404%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250404T100450Z&X-Amz-Expires=300&X-Amz-Signature=a9ddd9ffc64abaa4706aa6a260095e36b032e3c3f894488871a74ba028527706&X-Amz-SignedHeaders=host" width="200"/>
+<img src="https://github-production-user-asset-6210df.s3.amazonaws.com/116942066/429643165-28a8e8be-04b1-4456-a721-4f4d41232d19.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20250404%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250404T100453Z&X-Amz-Expires=300&X-Amz-Signature=7972c72bda71aa8b879b7f2ef5aa2335957a15686aebe7aac53ed3a7ddf06bbc&X-Amz-SignedHeaders=host" width="200"/>
+</p>
+
 ## Steps for Installation
 ```sh
 git clone https://github.com/vishnuprasad2004/momentum.git  
