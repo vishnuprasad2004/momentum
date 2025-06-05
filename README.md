@@ -23,8 +23,12 @@ I tried to solve a problem that arise with traditional task manager tools (todo 
 - ✅ Redux Toolkit – Efficient state management for a smooth experience
 - ✅ Offline Support – Access tasks anytime
 
-# Screenshots
+## Demo
+[Demo Link on LinkedIn](https://www.linkedin.com/posts/vishnu-prasad-korada_productivity-reactnative-ai-activity-7315775586411401219-JiTk?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD6NAtMBSEEKAOTgaSSepBtW0voUpMgM5GI)
 
+
+<!-- 
+# Screenshots
 <style>
   img {
     border-radius:20px; 
@@ -41,7 +45,7 @@ I tried to solve a problem that arise with traditional task manager tools (todo 
   ## A sample of the Push Notifications
 
   <img src="https://media-hosting.imagekit.io/f243b03e6ef64c48/Screenshot%202025-04-21%20232105.png?Expires=1839865876&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=ztkbm7xCUWblTyoH7sRt~bMwU5TBo~KZ-Ufn2gr8mimP-y3QvgqEYIaB9mHKhTd6A7E2WFQVd6Lrr2t48YC9vZLxUb1LRtWvzPPPQTfUeUXFIR9sDiF5SwawT~QSNKb7A0Wcq12v0HSA0zpnBdPliQi-IziGk8RaVkbVnrpvUo73sNfhHPv-Imja4o03BlrVOSiqqltyNFqgUNAlFqESM9fVk4~183935x7rfrBdsLymMyRsAhTyNREfPmtp0kV0U76zO9Y9-drGMcCNdWFH0ToOKR1DjetLw8T0CQ-66VZnjjJi~FLZxpykHAJXc~JenpOH-VPlATgFHBRzs5eNnw__" width="200" style="border-radius:20px; box-shadow:0 0 0 3px black, 0 0 0 4px white, 0 0 12px 2px black; margin:10;"/>
-</p>
+</p> -->
 
 ## Steps for Installation
 ```sh
